@@ -4,14 +4,25 @@
   "main": "index.js",
   "author": "Th1nkK1D <witheep@gmail.com>",
   "license": "MIT",
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
   "devDependencies": {
     "@types/jest": "^25.1.2",
     "@typescript-eslint/eslint-plugin": "^2.19.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-typescript": "^7.0.0",
     "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jest": "^23.7.0",
     "jest": "^25.1.0",
+    "lint-staged": "^10.0.7",
     "ts-jest": "^25.2.0",
     "typescript": "^3.7.5"
+  },
+  "lint-staged": {
+    "*.js": ["./node_modules/.bin/eslint — fix", "git add"],
+    "*.ts": ["./node_modules/.bin/eslint — fix", "git add"]
   }
 }
