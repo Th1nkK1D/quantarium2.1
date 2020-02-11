@@ -9,6 +9,7 @@ module.exports = {
       "error",
       "always",
       { exceptAfterSingleLine: true }
-    ]
+    ],
+    'arrow-parens': ["error", "as-needed"],
   }
 };
