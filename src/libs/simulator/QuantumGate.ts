@@ -41,14 +41,22 @@ class QuantumGate {
     return this.description;
   }
 
-  getOperationResultFromState(initState: QubitState): QubitState {
-    const finalState = { ...initState };
+  getOperationResultFromState(initState: QubitState): Array<QubitState> {
+    const resultStates: Array<QubitState> = [];
+    let lastState = initState;
 
     this.operations.forEach(operation => {
-      finalState[operation.axis] += operation.value;
+      const currentState: QubitState = {
+        ...lastState,
+        [operation.axis]: lastState[operation.axis] + operation.value,
+      };
+
+      resultStates.push(currentState);
+
+      lastState = currentState;
     });
 
-    return finalState;
+    return resultStates;
   }
 }
 

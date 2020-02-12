@@ -34,8 +34,11 @@ describe('QuantumGate', () => {
 
   it('should be able to give operation result on a given state', () => {
     const initState = { x: 0, y: 0, z: 0 };
-    const expectedState = { x: 0, y: 0.25, z: 0.5 };
+    const expectedStates = [
+      { x: 0, y: 0, z: 0.5 },
+      { x: 0, y: 0.25, z: 0.5 },
+    ];
 
-    expect(quantumGate.getOperationResultFromState(initState)).toEqual(expectedState);
+    expect(quantumGate.getOperationResultFromState(initState)).toEqual(expectedStates);
   });
 });
