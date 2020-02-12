@@ -42,39 +42,33 @@ class QuantumGate {
   }
 
   getOperationResultFromState(initState: QubitState): Array<QubitState> {
-    const resultStates: Array<QubitState> = [];
-    let lastState = initState;
-
-    this.operations.forEach(operation => {
-      const currentState: QubitState = {
-        ...lastState,
-        [operation.axis]: lastState[operation.axis] + operation.value,
-      };
-
-      resultStates.push(currentState);
-
-      lastState = currentState;
-    });
-
-    return resultStates;
+    return QuantumGate.getStateSnapshotsFromEachOperation(initState, this.operations);
   }
 
   getInvertedOperationResultFromState(initState: QubitState): Array<QubitState> {
-    const resultStates: Array<QubitState> = [];
+    return QuantumGate.getStateSnapshotsFromEachOperation(initState, this.operations.reverse(), -1);
+  }
+
+  static getStateSnapshotsFromEachOperation(
+    initState: QubitState,
+    operations: Array<Operation>,
+    multiplier = 1,
+  ): Array<QubitState> {
+    const stateSnapshots: Array<QubitState> = [];
     let lastState = initState;
 
-    this.operations.reverse().forEach(operation => {
+    operations.forEach(operation => {
       const currentState: QubitState = {
         ...lastState,
-        [operation.axis]: lastState[operation.axis] - operation.value,
+        [operation.axis]: lastState[operation.axis] + (multiplier * operation.value),
       };
 
-      resultStates.push(currentState);
+      stateSnapshots.push(currentState);
 
       lastState = currentState;
     });
 
-    return resultStates;
+    return stateSnapshots;
   }
 }
 
