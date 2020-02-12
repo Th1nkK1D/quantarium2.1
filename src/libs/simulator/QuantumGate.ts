@@ -17,10 +17,10 @@ interface Operation {
 }
 
 class QuantumGate {
-  name: string;
-  symbol: string;
-  description: string;
-  operations: Array<Operation>;
+  private name: string;
+  private symbol: string;
+  private description: string;
+  private operations: Array<Operation>;
 
   constructor(prop: QuantumGateConstructor) {
     this.name = prop.name;
@@ -49,7 +49,7 @@ class QuantumGate {
     return QuantumGate.getStateSnapshotsFromEachOperation(initState, this.operations.reverse(), -1);
   }
 
-  static getStateSnapshotsFromEachOperation(
+  private static getStateSnapshotsFromEachOperation(
     initState: QubitState,
     operations: Array<Operation>,
     multiplier = 1,
