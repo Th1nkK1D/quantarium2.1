@@ -20,19 +20,19 @@ describe('QuantumGate', () => {
     });
   });
 
-  it('should be able to give us name', () => {
+  test('should be able to give us name', () => {
     expect(quantumGate.getName()).toBe(name);
   });
 
-  it('should be able to give us symbol', () => {
+  test('should be able to give us symbol', () => {
     expect(quantumGate.getSymbol()).toBe(symbol);
   });
 
-  it('should be able to give us description', () => {
+  test('should be able to give us description', () => {
     expect(quantumGate.getDescription()).toBe(description);
   });
 
-  it('should be able to give operation result on a given state', () => {
+  test('should be able to give operation result on a given state', () => {
     const initState = { x: 0, y: 0, z: 0 };
     const expectedStates = [
       { x: 0, y: 0, z: 0.5 },
@@ -42,7 +42,7 @@ describe('QuantumGate', () => {
     expect(quantumGate.getOperationResultFromState(initState)).toEqual(expectedStates);
   });
 
-  it('should be able to give inverted operation on a given state', () => {
+  test('should be able to give inverted operation on a given state', () => {
     const appliedState = { x: 0, y: 0.25, z: 0.5 };
     const expectedState = [
       { x: 0, y: 0, z: 0.5 },
