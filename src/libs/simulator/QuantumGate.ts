@@ -58,6 +58,24 @@ class QuantumGate {
 
     return resultStates;
   }
+
+  getInvertedOperationResultFromState(initState: QubitState): Array<QubitState> {
+    const resultStates: Array<QubitState> = [];
+    let lastState = initState;
+
+    this.operations.reverse().forEach(operation => {
+      const currentState: QubitState = {
+        ...lastState,
+        [operation.axis]: lastState[operation.axis] - operation.value,
+      };
+
+      resultStates.push(currentState);
+
+      lastState = currentState;
+    });
+
+    return resultStates;
+  }
 }
 
 export default QuantumGate;

@@ -41,4 +41,14 @@ describe('QuantumGate', () => {
 
     expect(quantumGate.getOperationResultFromState(initState)).toEqual(expectedStates);
   });
+
+  it('should be able to give inverted operation on a given state', () => {
+    const appliedState = { x: 0, y: 0.25, z: 0.5 };
+    const expectedState = [
+      { x: 0, y: 0, z: 0.5 },
+      { x: 0, y: 0, z: 0 },
+    ];
+
+    expect(quantumGate.getInvertedOperationResultFromState(appliedState)).toEqual(expectedState);
+  });
 });
