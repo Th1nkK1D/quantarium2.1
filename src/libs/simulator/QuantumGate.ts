@@ -1,14 +1,10 @@
+import { CartesianCoord } from './Qubit';
+
 interface QuantumGateConstructor {
   name: string,
   symbol: string,
   description: string,
   operations: Array<Operation>,
-}
-
-interface QubitState {
-  x: number,
-  y: number,
-  z: number,
 }
 
 interface Operation {
@@ -41,24 +37,24 @@ class QuantumGate {
     return this.description;
   }
 
-  getOperationResultFromState(initState: QubitState): Array<QubitState> {
+  getOperationResultFromState(initState: CartesianCoord): Array<CartesianCoord> {
     return QuantumGate.getStateSnapshotsFromEachOperation(initState, this.operations);
   }
 
-  getInvertedOperationResultFromState(initState: QubitState): Array<QubitState> {
+  getInvertedOperationResultFromState(initState: CartesianCoord): Array<CartesianCoord> {
     return QuantumGate.getStateSnapshotsFromEachOperation(initState, this.operations.reverse(), -1);
   }
 
   private static getStateSnapshotsFromEachOperation(
-    initState: QubitState,
+    initState: CartesianCoord,
     operations: Array<Operation>,
     multiplier = 1,
-  ): Array<QubitState> {
-    const stateSnapshots: Array<QubitState> = [];
+  ): Array<CartesianCoord> {
+    const stateSnapshots: Array<CartesianCoord> = [];
     let lastState = initState;
 
     operations.forEach(operation => {
-      const currentState: QubitState = {
+      const currentState: CartesianCoord = {
         ...lastState,
         [operation.axis]: lastState[operation.axis] + (multiplier * operation.value),
       };

@@ -1,4 +1,4 @@
-interface QubitState {
+interface CartesianCoord {
   x: number,
   y: number,
   z: number,
@@ -22,11 +22,11 @@ class Qubit {
     this.statePresenter = statePresenter;
   }
 
-  getCurrentState(): QubitState {
+  getCurrentState(): CartesianCoord {
     const { x, y, z } = this.statePresenter.rotation;
     return { x, y, z };
   }
 }
 
 export default Qubit;
-export { QuantumStatePresenter };
+export { QuantumStatePresenter, CartesianCoord };
