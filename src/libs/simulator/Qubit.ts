@@ -1,6 +1,11 @@
 import QuantumGate from './QuantumGate';
 import { QuantumStatePresenter, CartesianCoord, Rotation } from './Interfaces';
 
+type GateInstructionFunction = (
+  gate: QuantumGate,
+  stateSetter: (stateObj: Rotation, value: CartesianCoord) => Promise<void>,
+) => Promise<void>;
+
 class Qubit {
   private statePresenter: QuantumStatePresenter;
 
@@ -13,27 +18,17 @@ class Qubit {
     return { x, y, z };
   }
 
-  async apply(
-    gate: QuantumGate,
-    stateSetter: (stateObj: Rotation, value: CartesianCoord) => Promise<void>,
-  ): Promise<void> {
-    const stateSnapshots = gate.getOperationResultFromState(this.getCurrentState());
+  apply: GateInstructionFunction = this.gateInstructionFactory('getOperationResultFromState');
+  revert: GateInstructionFunction = this.gateInstructionFactory('getInvertedOperationResultFromState');
 
-    return stateSnapshots.reduce((promise: Promise<void>, snapShot) => promise.then(
-      () => stateSetter(this.statePresenter.rotation, snapShot),
-    ), Promise.resolve());
-  }
+  private gateInstructionFactory(opsName: 'getOperationResultFromState' | 'getInvertedOperationResultFromState'): GateInstructionFunction {
+    return async (gate, stateSetter) => {
+      const stateSnapshots = gate[opsName](this.getCurrentState());
 
-
-  async revert(
-    gate: QuantumGate,
-    stateSetter: (stateObj: Rotation, value: CartesianCoord) => Promise<void>,
-  ): Promise<void> {
-    const stateSnapshots = gate.getInvertedOperationResultFromState(this.getCurrentState());
-
-    return stateSnapshots.reduce((promise: Promise<void>, snapShot) => promise.then(
-      () => stateSetter(this.statePresenter.rotation, snapShot),
-    ), Promise.resolve());
+      return stateSnapshots.reduce((promise: Promise<void>, snapShot) => promise.then(
+        () => stateSetter(this.statePresenter.rotation, snapShot),
+      ), Promise.resolve());
+    };
   }
 }
 
