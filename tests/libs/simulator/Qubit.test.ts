@@ -15,6 +15,14 @@ const hadamardGate = new QuantumGate(
   ],
 );
 
+const mockStateSetter: (object: Rotation, value: CartesianCoord) => Promise<void> = (
+  object: Rotation,
+  value: CartesianCoord,
+) => new Promise(resolve => {
+  object.set(value.x, value.y, value.z);
+  resolve();
+});
+
 const getQubitStateFromPresenter = (
   { rotation: { x, y, z } }: QuantumStatePresenter,
 ) => ({ x, y, z });
@@ -26,10 +34,10 @@ describe('Qubit', () => {
         x: 0,
         y: 0,
         z: 0,
-        set(x?: number, y?: number, z?: number) {
-          this.x = x || this.x;
-          this.y = y || this.y;
-          this.z = z || this.z;
+        set(x: number, y: number, z: number) {
+          this.x = x;
+          this.y = y;
+          this.z = z;
         },
       },
     };
@@ -45,13 +53,18 @@ describe('Qubit', () => {
 
   test('should change quantum state when apply gate', async () => {
     const expectedState = { x: 0, y: 0.25, z: 0.5 };
-    await qubit.apply(
-      hadamardGate,
-      (object: Rotation, value: CartesianCoord) => new Promise(resolve => {
-        Object.assign(object, value);
-        resolve();
-      }),
-    );
+    await qubit.apply(hadamardGate, mockStateSetter);
+
+    const state = getQubitStateFromPresenter(mockQuantumStatePresenter);
+
+    expect(state).toEqual(expectedState);
+  });
+
+  test('should change quantum state back when invert gate', async () => {
+    const expectedState = { x: 0, y: 0, z: 0 };
+
+    await qubit.apply(hadamardGate, mockStateSetter);
+    await qubit.revert(hadamardGate, mockStateSetter);
 
     const state = getQubitStateFromPresenter(mockQuantumStatePresenter);
 

@@ -23,6 +23,18 @@ class Qubit {
       () => stateSetter(this.statePresenter.rotation, snapShot),
     ), Promise.resolve());
   }
+
+
+  async revert(
+    gate: QuantumGate,
+    stateSetter: (stateObj: Rotation, value: CartesianCoord) => Promise<void>,
+  ): Promise<void> {
+    const stateSnapshots = gate.getInvertedOperationResultFromState(this.getCurrentState());
+
+    return stateSnapshots.reduce((promise: Promise<void>, snapShot) => promise.then(
+      () => stateSetter(this.statePresenter.rotation, snapShot),
+    ), Promise.resolve());
+  }
 }
 
 export default Qubit;
