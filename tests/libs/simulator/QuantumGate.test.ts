@@ -1,4 +1,6 @@
-import QuantumGate, { Operation } from '../../../src/libs/simulator/QuantumGate';
+import QuantumGate from '../../../src/libs/simulator/QuantumGate';
+import { Operation } from '../../../src/libs/simulator/Interfaces';
+
 
 describe('QuantumGate', () => {
   const name = 'Hadamard';

@@ -1,15 +1,10 @@
-import { CartesianCoord } from './Qubit';
+import { CartesianCoord, Operation } from './Interfaces';
 
 interface QuantumGateConstructor {
   name: string,
   symbol: string,
   description: string,
   operations: Array<Operation>,
-}
-
-interface Operation {
-  axis: 'x' | 'y' | 'z',
-  value: number,
 }
 
 class QuantumGate {
@@ -69,4 +64,3 @@ class QuantumGate {
 }
 
 export default QuantumGate;
-export { Operation };
