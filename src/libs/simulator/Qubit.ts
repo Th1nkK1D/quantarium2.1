@@ -1,5 +1,10 @@
 import QuantumGate from './QuantumGate';
-import { QuantumStatePresenter, CartesianCoord, Rotation } from './Interfaces';
+import {
+  QuantumStatePresenter,
+  CartesianCoord,
+  Rotation,
+  MeasurementResult,
+} from './Interfaces';
 
 type GateInstructionFunction = (
   gate: QuantumGate,
@@ -29,6 +34,29 @@ class Qubit {
         () => stateSetter(this.statePresenter.rotation, snapShot),
       ), Promise.resolve());
     };
+  }
+
+  measure(times: number): MeasurementResult {
+    const { x, y } = this.getCurrentState();
+    const probabilityToGetOne = 2 * (x + y);
+
+    const result: MeasurementResult = {
+      count: {
+        total: times,
+        0: 0,
+        1: 0,
+      },
+      shots: [],
+    };
+
+    for (let i = 0; i < times; i += 1) {
+      const shot = Math.random() < probabilityToGetOne ? 1 : 0;
+
+      result.count[shot] += 1;
+      result.shots.push(shot);
+    }
+
+    return result;
   }
 }
 

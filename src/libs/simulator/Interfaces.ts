@@ -19,3 +19,12 @@ export interface Rotation {
 export interface QuantumStatePresenter {
   rotation: Rotation,
 }
+
+export interface MeasurementResult {
+  count: {
+    total: number,
+    0: number,
+    1: number,
+  },
+  shots: Array<0|1>,
+}
