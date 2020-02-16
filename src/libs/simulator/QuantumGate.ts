@@ -1,23 +1,21 @@
 import { CartesianCoord, Operation } from './Interfaces';
 
-interface QuantumGateConstructor {
-  name: string,
-  symbol: string,
-  description: string,
-  operations: Array<Operation>,
-}
-
 class QuantumGate {
   private name: string;
   private symbol: string;
   private description: string;
   private operations: Array<Operation>;
 
-  constructor(prop: QuantumGateConstructor) {
-    this.name = prop.name;
-    this.symbol = prop.symbol;
-    this.description = prop.description;
-    this.operations = prop.operations;
+  constructor(
+    name: string,
+    symbol: string,
+    description: string,
+    operations: Array<Operation>,
+  ) {
+    this.name = name;
+    this.symbol = symbol;
+    this.description = description;
+    this.operations = operations;
   }
 
   getName() {

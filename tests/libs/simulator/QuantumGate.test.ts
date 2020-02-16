@@ -14,12 +14,7 @@ describe('QuantumGate', () => {
   let quantumGate: QuantumGate;
 
   beforeEach(() => {
-    quantumGate = new QuantumGate({
-      name,
-      symbol,
-      description,
-      operations,
-    });
+    quantumGate = new QuantumGate(name, symbol, description, operations);
   });
 
   test('should be able to give us name', () => {

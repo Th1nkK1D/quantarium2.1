@@ -5,15 +5,15 @@ import { QuantumStatePresenter, Rotation, CartesianCoord } from '../../../src/li
 let mockQuantumStatePresenter: QuantumStatePresenter;
 let qubit: Qubit;
 
-const hadamardGate = new QuantumGate({
-  name: 'Hadamard Gate',
-  symbol: 'H',
-  description: '...',
-  operations: [
+const hadamardGate = new QuantumGate(
+  'Hadamard Gate',
+  'H',
+  '...',
+  [
     { axis: 'z', value: 0.5 },
     { axis: 'y', value: 0.25 },
   ],
-});
+);
 
 const getQubitStateFromPresenter = (
   { rotation: { x, y, z } }: QuantumStatePresenter,
